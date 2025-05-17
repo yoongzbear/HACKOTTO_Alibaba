@@ -18,7 +18,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
-    #productDropdown{
+    #timelineSelect{
         width: auto;
         max-width: 300px;
         display: inline-block;
@@ -103,28 +103,18 @@
     </div>
 
     <div class="label-input-group">
-        <label for="productDropdown">Choose a product:</label>
-        <select id="productDropdown">
-            <option value="">--Select a product--</option>
-
-            <?php
-                require_once 'connection.php';
-                $sql = "SELECT product_id, product_name FROM products";
-                $result = mysqli_query($conn, $sql);
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . htmlspecialchars($row['product_id']) . "'>" 
-                            . htmlspecialchars($row['product_name']) . 
-                            "</option>";
-                    }
-                } else {
-                    echo "<option disabled>No products found</option>";
-                }
-            ?>
-        </select>
+        <!-- Selection Controls -->
+        <label for="timelineSelect">Select Timeline:</label>
+            <div class="input-with-button">
+                <select id="timelineSelect">
+                <option value="">--Select--</option>
+                <option value="7days">Last 7 Days</option>
+                <option value="30days">Last 30 Days</option>
+                <option value="120days">Last 4 Months</option>
+            </select>
+            <button id="generateButton" class="text-button" title="Generate">Generate</button>
+        </div>
         
-        <button id="generateButton" class="text-button" title="Generate">Generate</button>
     </div>
 
     <!-- Inline Loading Message -->
@@ -158,7 +148,7 @@
     </div>
 
     <script>
-        const dropdown = document.getElementById("productDropdown");
+        const dropdown = document.getElementById("timelineSelect");
         const generateButton = document.getElementById("generateButton");
         const loadingMessage = document.getElementById("loadingMessage");
         const chartSection = document.getElementById("chartSection");
