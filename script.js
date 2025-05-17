@@ -121,4 +121,62 @@ function updateForecastChart(forecastData) {
 // call the forecast like loadSalesForecast(1); // forecast for product ID 1
 //testing
 
+// trend analysis for sales
+async function loadSalesTrend(productId = 1, startDate = '', endDate = '') {
+  const url = `/HACKOTTO_Alibaba/get-sales-data.php?product_id=${productId}`;
+  const params = [];
+
+  if (startDate) params.push(`start_date=${startDate}`);
+  if (endDate) params.push(`end_date=${endDate}`);
+
+  try {
+    const response = await fetch(url + '&' + params.join('&'));
+    const result = await response.json();
+
+    if (result.error) {
+      console.error("Failed to load sales data:", result.error);
+      return;
+    }
+
+    updateSalesChart(result.labels, result.data);
+  } catch (err) {
+    console.error("Network error:", err);
+  }
+}
+
+// if select new product or time
+function updateSalesChart(labels, values) {
+  const chart = Chart.getChart('salesForecastChart');
+
+  // Clear old dataset
+  chart.data.datasets = [];
+
+  // Set new labels
+  chart.data.labels = labels;
+
+  // Add actual sales
+  chart.data.datasets.push({
+    label: 'Units Sold',
+    data: values,
+    borderColor: 'blue',
+    fill: false
+  });
+
+  chart.update();
+}
+
+// inventory
+async function loadInventory() {
+  const response = await fetch('/get-inventory-data.php');
+  const inventoryList = await response.json();
+
+  const container = document.getElementById('inventory-list');
+  container.innerHTML = '';
+
+  inventoryList.forEach(product => {
+    const div = document.createElement('div');
+    div.textContent = `${product.product_name}: ${product.quantity_in_stock} units`;
+    container.appendChild(div);
+  });
+}
 
