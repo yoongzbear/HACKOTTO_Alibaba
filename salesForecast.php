@@ -85,7 +85,7 @@
         animation: spin 0.8s linear infinite;
         box-sizing: border-box;
     }
-    
+
     @keyframes spin {
         to { transform: rotate(360deg); }
     }
@@ -133,12 +133,35 @@
         <p style="margin-top: 0.5rem; font-size:1rem;">Generating...</p>
     </div>
 
+        <!-- Chart Section -->
+    <div id="chartSection" style="display: none; margin-top: 2rem;">
+        <div class="chart-grid">
+        <div class="card">
+            <h2>Sales Weekly</h2>
+            <iframe
+            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=aa48429f-e802-438a-8895-cac617b6e888&accessTicket=2c9fa7f6-0fca-405a-a03e-d7b0e8b1cc89&dd_orientation=auto"
+            width="100%" height="800" frameborder="10"></iframe>
+        </div>
+        </div>
+
+            <!-- Chart Section -->
+        <div class="chart-grid">
+        <div class="card">
+            <h2>Sales Weekly</h2>
+            <iframe
+            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=aa48429f-e802-438a-8895-cac617b6e888&accessTicket=2c9fa7f6-0fca-405a-a03e-d7b0e8b1cc89&dd_orientation=auto"
+            width="100%" height="800" frameborder="10"></iframe>
+        </div>
+        </div>
+    </div>
+
     </div>
 
     <script>
         const dropdown = document.getElementById("productDropdown");
         const generateButton = document.getElementById("generateButton");
         const loadingMessage = document.getElementById("loadingMessage");
+        const chartSection = document.getElementById("chartSection");
 
         generateButton.addEventListener("click", function () {
             const selectedProductId = dropdown.value;
@@ -149,6 +172,11 @@
                 // Show inline loading message
                 loadingMessage.style.display = "block";
 
+                // Reset UI
+                generateButton.disabled = true;
+                loadingMessage.style.display = "block";
+                chartSection.style.display = "none";
+
                 // Simulate generation delay (replace with real logic)
                 setTimeout(() => {
                     // Update URL
@@ -158,9 +186,11 @@
                     // Hide loading message
                     loadingMessage.style.display = "none";
                     generateButton.disabled = false;
+                    // Show chart section
+                    chartSection.style.display = "block";
 
                     console.log("Product ID in URL:", selectedProductId);
-                }, 1000); // Simulated 1s load time
+                }, 5000); // Simulated 1s load time
             }
         });
     </script>
