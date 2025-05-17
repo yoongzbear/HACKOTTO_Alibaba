@@ -58,3 +58,37 @@ new Chart(trendCtx, {
   },
   options: { responsive: true }
 });
+
+// sales forecast
+async function loadSalesForecast(productId) {
+  const response = await fetch(`/forecast.php?product_id=${productId}`);
+  const result = await response.json();
+
+  const forecastValues = result.output.forecast || [0, 0, 0]; // example format
+  updateForecastChart(forecastValues);
+}
+
+function updateForecastChart(forecastData) {
+  const chart = Chart.getChart('salesForecastChart');
+  const currentLabels = chart.data.labels;
+
+  // Add future months
+  const now = new Date();
+  const forecastLabels = Array.from({ length: forecastData.length }, (_, i) => {
+    const d = new Date(now);
+    d.setMonth(d.getMonth() + i + 1);
+    return d.toISOString().slice(0, 7); // YYYY-MM
+  });
+
+  chart.data.labels = [...currentLabels, ...forecastLabels];
+  chart.data.datasets.push({
+    label: 'Forecast',
+    data: Array(currentLabels.length).fill(null).concat(forecastData),
+    borderColor: 'green',
+    borderDash: [5, 5],
+    fill: false
+  });
+  chart.update();
+}
+
+// call the forecast like loadSalesForecast(1); // forecast for product ID 1
