@@ -86,6 +86,69 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="trendAnalysis.js"></script>
+  <script>
+    // Find the second recommendation section
+    const recommendationSection = document.querySelectorAll('.recommendation-section')[1];
+
+    // Create input and button elements
+    const container = document.createElement('div');
+    container.style.marginTop = '1rem';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'userQuestion';
+    input.placeholder = 'Ask about revenue trend...';
+    input.style.width = '80%';
+    input.style.marginRight = '1rem';
+    input.style.padding = '0.5rem';
+
+    const button = document.createElement('button');
+    button.textContent = 'Ask AI';
+    button.id = 'askButton';
+    button.style.padding = '0.5rem 1rem';
+    button.style.cursor = 'pointer';
+
+    // Append UI components
+    container.appendChild(input);
+    container.appendChild(button);
+    recommendationSection.appendChild(container);
+
+    // Ask AI functionality
+    document.getElementById('askButton').addEventListener('click', () => {
+      const question = document.getElementById('userQuestion').value.trim();
+      const recommendationBox = recommendationSection.querySelector('#recommendation');
+
+      if (!question) {
+        recommendationBox.value = 'Please enter a question.';
+        return;
+      }
+
+      recommendationBox.value = 'Generating recommendation...';
+
+      fetch('askQwen.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          question: question,
+          product_id: 1 // Change this ID dynamically if needed
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.answer) {
+          recommendationBox.value = data.answer;
+        } else {
+          recommendationBox.value = data.error || 'No response from AI.';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        recommendationBox.value = 'Error contacting AI service.';
+      });
+    });
+  </script>
 </body>
 
 </html>
