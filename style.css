@@ -1,19 +1,23 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
 }
 
 .dashboard {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 h1 {
-  text-align: center;
-  margin-bottom: 30px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
 }
 
 .grid {
@@ -48,4 +52,84 @@ h1 {
     color: red;
     font-weight: bold;
     margin-left: 10px;
+}
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #e0e0e0;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#productList {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+#productList li {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fafafa;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+#productList li:hover {
+    background-color: #f0f0f0;
+}
+
+.restock-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #ffeaa7;
+    border-left: 4px solid #fab14b;
+    font-weight: bold;
+    color: #333;
+    border-radius: 4px;
+}
+
+#orderButton {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#orderButton:hover {
+    background-color: #0056b3;
 }
