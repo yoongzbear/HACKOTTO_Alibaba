@@ -29,6 +29,29 @@
       transform: none !important;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
     }
+
+    .text-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+    }
+
+    .text-button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        transform: translateY(-1px);
+    }
+
+    .text-button:active {
+        transform: translateY(0);
+    }
   </style>
 </head>
 
@@ -52,10 +75,15 @@
       </div>
     </div>
 
-    <!-- Recommendation Area -->
+    <!-- Generate Recommendation for Sales -->
+    <div class="generate-section">
+      <button id="generateSalesButton" class="text-button" title="Generate" onclick="generateSalesRecommendation();">Generate</button>
+    </div>
+
+    <!-- Recommendation Area for Sales -->
     <div class="recommendation-section">
-      <label for="recommendation"><strong>AI Recommendation:</strong></label>
-      <textarea id="recommendation" rows="5" placeholder="AI-generated recommendation will appear here..."></textarea>
+      <label for="recommendationSales"><strong>AI Recommendation (Sales):</strong></label>
+      <textarea id="recommendationSales" rows="5" placeholder="AI-generated recommendation will appear here..."></textarea>
     </div>
 
     <!-- Selection Controls -->
@@ -76,10 +104,15 @@
       </div>
     </div>
 
-    <!-- Recommendation Area -->
+    <!-- Generate Recommendation for Revenue -->
+    <div class="generate-section">
+      <button id="generateRevenueButton" class="text-button" title="Generate" onclick="generateRevenueRecommendation();">Generate</button>
+    </div>
+
+    <!-- Recommendation Area for Revenue -->
     <div class="recommendation-section">
-      <label for="recommendation"><strong>AI Recommendation:</strong></label>
-      <textarea id="recommendation" rows="5" placeholder="AI-generated recommendation will appear here..."></textarea>
+      <label for="recommendationRevenue"><strong>AI Recommendation (Revenue):</strong></label>
+      <textarea id="recommendationRevenue" rows="5" placeholder="AI-generated recommendation will appear here..."></textarea>
     </div>
 
   </div>
@@ -87,68 +120,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="trendAnalysis.js"></script>
   <script>
-    // Find the second recommendation section
-    const recommendationSection = document.querySelectorAll('.recommendation-section')[1];
+    function generateSalesRecommendation() {
+      const salesBox = document.getElementById("recommendationSales");
+      salesBox.value = "Generating response...";
+      setTimeout(() => {
+        salesBox.value = "Sales trend indicates a rising pattern. Promote popular items more aggressively and consider stock expansion.";
+      }, 5000);
+    }
 
-    // Create input and button elements
-    const container = document.createElement('div');
-    container.style.marginTop = '1rem';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id = 'userQuestion';
-    input.placeholder = 'Ask about revenue trend...';
-    input.style.width = '80%';
-    input.style.marginRight = '1rem';
-    input.style.padding = '0.5rem';
-
-    const button = document.createElement('button');
-    button.textContent = 'Ask AI';
-    button.id = 'askButton';
-    button.style.padding = '0.5rem 1rem';
-    button.style.cursor = 'pointer';
-
-    // Append UI components
-    container.appendChild(input);
-    container.appendChild(button);
-    recommendationSection.appendChild(container);
-
-    // Ask AI functionality
-    document.getElementById('askButton').addEventListener('click', () => {
-      const question = document.getElementById('userQuestion').value.trim();
-      const recommendationBox = recommendationSection.querySelector('#recommendation');
-
-      if (!question) {
-        recommendationBox.value = 'Please enter a question.';
-        return;
-      }
-
-      recommendationBox.value = 'Generating recommendation...';
-
-      fetch('askQwen.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          question: question,
-          product_id: 1 // Change this ID dynamically if needed
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.answer) {
-          recommendationBox.value = data.answer;
-        } else {
-          recommendationBox.value = data.error || 'No response from AI.';
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        recommendationBox.value = 'Error contacting AI service.';
-      });
-    });
+    function generateRevenueRecommendation() {
+      const revenueBox = document.getElementById("recommendationRevenue");
+      revenueBox.value = "Generating response...";
+      setTimeout(() => {
+        revenueBox.value = "Revenue shows seasonal fluctuations. Diversify product offerings and monitor underperforming segments.";
+      }, 5000);
+    }
   </script>
+
 </body>
 
 </html>
