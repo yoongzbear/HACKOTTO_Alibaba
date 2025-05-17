@@ -4,7 +4,7 @@ from openai import OpenAI
 try:
     client = OpenAI(
         # If the environment variable is not configured, replace the following line with your API key: api_key="sk-xxx",
-        api_key="sk-09882e1f508c4910b9baa8b4c7a52107",
+        api_key="sk-aca8221d88c241d98cd4ad53cda178bf",
         base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
     )
 
