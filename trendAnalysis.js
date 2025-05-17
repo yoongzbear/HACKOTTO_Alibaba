@@ -103,3 +103,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+  const select = document.getElementById("timelineSelect");
+  const iframe = document.getElementById("chartFrame");
+
+  const dashboardUrls = {
+    "7days": "https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=43211323-707f-4ff8-adfd-64e477527807&accessTicket=56f046d9-e444-4ca2-b0fe-ba8d91bfabf6&dd_orientation=auto",
+    "30days": "https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=3bef6f5c-4440-4367-8b9b-0ebfe852f522&accessTicket=9f98ede8-f814-481f-bc2d-6e2d8096a6e9&dd_orientation=auto",
+    "120days": "https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=d055c1f0-e3f8-429f-901a-52e83619d945&accessTicket=dc351068-3950-40eb-9baf-95bdbc9b7d16&dd_orientation=auto"
+  };
+
+  // Set default view
+  iframe.src = dashboardUrls["7days"];
+
+  // Listen to dropdown changes
+  select.addEventListener("change", () => {
+    const selected = select.value;
+    iframe.src = dashboardUrls[selected];
+  });
