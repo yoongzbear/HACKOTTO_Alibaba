@@ -1,45 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Retail Inventory Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retail Inventory Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <h1>Carat Retail Inventory Dashboard</h1>
-      <p class="subtitle">Track inventory, forecast sales & optimize stock</p>
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h1>Carat Retail Inventory Dashboard</h1>
+            <p class="subtitle">Track inventory, forecast sales & optimize stock</p>
+        </div>
+
+        <div class="grid">
+            <a href="salesForecast.php" style="display: contents;">
+                <div class="card">
+                    <h2>Sales Forecast</h2>
+                    <canvas id="salesForecastChart"></canvas>
+                </div>
+            </a>
+
+            <a href="inventory-optimization-details.html" style="display: contents;">
+                <div class="card">
+                    <h2>Inventory Optimization</h2>
+                        <iframe
+                            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=0b0e7766-0025-4429-999d-0e11fc2789dc&accessTicket=92b04600-8860-423d-9b21-69549d172ceb&dd_orientation=auto"
+                            width="600" height="500" frameborder="0"></iframe>
+                </div>
+            </a>
+
+            <a href="trendAnalysis.html" style="display: contents;">
+                <div class="card">
+                    <h2>Trend Analysis</h2>
+                    <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=b95fdca1-9551-4c09-bcf9-3d1e96c6a927&accessTicket=d3fb0adc-004f-447d-833f-7e7a8f96ad1f&dd_orientation=auto"
+                    width="600" height="500" frameborder="0"></iframe>
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div class="grid">
-      <a href="salesForecast.php" style="display: contents;">
-        <div class="card">
-          <h2>Sales Forecast</h2>
-          <canvas id="salesForecastChart"></canvas>
-        </div>
-      </a>
-
-      <a href="inventory-optimization-details.html" style="display: contents;">
-        <div class="card">
-          <h2>Inventory Optimization</h2>
-          <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=0b0e7766-0025-4429-999d-0e11fc2789dc&accessTicket=92b04600-8860-423d-9b21-69549d172ceb&dd_orientation=auto"
-            width="700" height="500" frameborder="0"></iframe>          
-        </div>
-      </a>
-
-      <a href="trendAnalysis.html" style="display: contents;">
-        <div class="card">
-          <h2>Trend Analysis</h2>
-          <canvas id="trendAnalysisChart"></canvas>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
