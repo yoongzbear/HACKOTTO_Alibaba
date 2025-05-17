@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Retail Inventory Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Retail Inventory Dashboard</h1>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Sales Forecast</h2>
+        <canvas id="salesForecastChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>Inventory Optimization</h2>
+        <canvas id="inventoryOptimizationChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>Trend Analysis</h2>
+        <canvas id="trendAnalysisChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
