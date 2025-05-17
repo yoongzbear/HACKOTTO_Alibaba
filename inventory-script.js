@@ -1,10 +1,3 @@
-// Sample product data
-const products = [
-    { id: 1, name: "Product A", stock: 15, threshold: 20 },
-    { id: 2, name: "Product B", stock: 25, threshold: 20 },
-    { id: 3, name: "Product C", stock: 10, threshold: 20 },
-    { id: 4, name: "Product D", stock: 5, threshold: 15 },
-];
 
 // DOM Elements
 const productSelect = document.getElementById('productSelect');

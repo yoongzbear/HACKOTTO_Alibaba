@@ -193,8 +193,53 @@ select, input[type="text"] {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  max-width: 300px;
+  width: 100%;
+   margin: 1.5rem auto;
 }
 
 #orderButton:hover {
   background-color: #0056b3;
+}
+
+/* css for trend Analysis */
+.controls {
+  max-width: 900px;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.controls label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.controls select {
+  flex: 1;
+  min-width: 200px;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.recommendation-section {
+  max-width: 80%;
+  margin: 0 auto 2rem auto;
+  width: 100%;
+}
+
+.recommendation-section textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
 }
