@@ -108,9 +108,9 @@
             <div class="input-with-button">
                 <select id="timelineSelect">
                 <option value="">--Select--</option>
-                <option value="7days">Last 7 Days</option>
-                <option value="30days">Last 30 Days</option>
-                <option value="120days">Last 4 Months</option>
+                <option value="1day">Next Day</option>
+                <option value="7days">Next Week</option>
+                <option value="30days">Next Month</option>
             </select>
             <button id="generateButton" class="text-button" title="Generate">Generate</button>
         </div>
@@ -123,66 +123,67 @@
         <p style="margin-top: 0.5rem; font-size:1rem;">Generating...</p>
     </div>
 
-        <!-- Chart Section -->
-    <div id="chartSection" style="display: none; margin-top: 2rem;">
-        <div class="chart-grid">
-        <div class="card">
-            <h2>Sales Weekly</h2>
-            <iframe
-            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=aa48429f-e802-438a-8895-cac617b6e888&accessTicket=2c9fa7f6-0fca-405a-a03e-d7b0e8b1cc89&dd_orientation=auto"
-            width="100%" height="800" frameborder="10"></iframe>
-        </div>
+ <!-- Chart & Table Sections -->
+    <div id="sections">
+
+        <!-- 1 Day -->
+        <div id="section-1day" class="timeline-section" style="display:none;">
+            <h2>Next Day - Forecast Table</h2>
+            <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=47102060-be08-4e6e-ba4c-1c7e80459779&accessTicket=35f8fda2-9e99-435b-9b6c-99f4a61b5484&dd_orientation=auto" width="100%" height="400" frameborder="0"></iframe>
+            <h2>Next Day - Forecast Chart</h2>
+            <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=bf571edf-367e-4728-8b4f-d2d154409ad0&accessTicket=56481aac-e45a-416f-9f55-8b62981a1689&dd_orientation=auto" width="100%" height="500" frameborder="0"></iframe>
         </div>
 
-            <!-- Chart Section -->
-        <div class="chart-grid">
-        <div class="card">
-            <h2>Sales Weekly</h2>
-            <iframe
-            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=aa48429f-e802-438a-8895-cac617b6e888&accessTicket=2c9fa7f6-0fca-405a-a03e-d7b0e8b1cc89&dd_orientation=auto"
-            width="100%" height="800" frameborder="10"></iframe>
+        <!-- 7 Days -->
+        <div id="section-7days" class="timeline-section" style="display:none;">
+            <h2>Next Week - Forecast Table</h2>
+            <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=bc8853af-f40c-4bd4-96da-a9d6f35c84f1&accessTicket=0b23825e-9695-4754-a1c8-93ac775f76c1&dd_orientation=auto" width="100%" height="400" frameborder="0"></iframe>
+            <h2>Next Week - Forecast Chart</h2>
+            <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=c269ba42-8b17-4528-bf74-6e332e6b5b95&accessTicket=267078dc-94df-4444-a91f-0ba1b3f666e2&dd_orientation=auto" width="100%" height="500" frameborder="0"></iframe>
         </div>
+
+        <!-- 30 Days -->
+        <div id="section-30days" class="timeline-section" style="display:none;">
+            <h2>Next Month - Forecast Table</h2>
+            <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=f5ffcbbd-76ac-4e87-8136-84c9f067d4d6&accessTicket=40cd3b2c-c399-4ebd-b7df-8fd680fa51ef&dd_orientation=auto" width="100%" height="400" frameborder="0"></iframe>
+            <h2>Next Month - Forecast Chart</h2>
+            <iframe src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=0cc4aabe-d8a2-458a-8ae0-1676e2797519&accessTicket=5b6d6a61-1195-4370-919c-9cde48ae09e3&dd_orientation=auto" width="100%" height="500" frameborder="0"></iframe>
         </div>
+
     </div>
+</div>
 
-    </div>
+<script>
+    const dropdown = document.getElementById("timelineSelect");
+    const generateButton = document.getElementById("generateButton");
+    const loadingMessage = document.getElementById("loadingMessage");
+    const sections = document.querySelectorAll(".timeline-section");
 
-    <script>
-        const dropdown = document.getElementById("timelineSelect");
-        const generateButton = document.getElementById("generateButton");
-        const loadingMessage = document.getElementById("loadingMessage");
-        const chartSection = document.getElementById("chartSection");
+    generateButton.addEventListener("click", function () {
+        const selectedTimeline = dropdown.value;
+        if (!selectedTimeline) return;
 
-        generateButton.addEventListener("click", function () {
-            const selectedProductId = dropdown.value;
-            if (selectedProductId) {
-                // Disable button during processing
-                generateButton.disabled = true;
+        // Start loading
+        generateButton.disabled = true;
+        loadingMessage.style.display = "block";
 
-                // Show inline loading message
-                loadingMessage.style.display = "block";
+        // Hide all sections first
+        sections.forEach(section => section.style.display = "none");
 
-                // Reset UI
-                generateButton.disabled = true;
-                loadingMessage.style.display = "block";
-                chartSection.style.display = "none";
+        // Simulate delay
+        setTimeout(() => {
+            // Show selected section
+            const sectionToShow = document.getElementById(`section-${selectedTimeline}`);
+            if (sectionToShow) sectionToShow.style.display = "block";
 
-                // Simulate generation delay (replace with real logic)
-                setTimeout(() => {
-                    // Update URL
-                    const newUrl = `?product_id=${encodeURIComponent(selectedProductId)}`;
-                    window.history.pushState(null, '', newUrl);
+            // End loading
+            loadingMessage.style.display = "none";
+            generateButton.disabled = false;
 
-                    // Hide loading message
-                    loadingMessage.style.display = "none";
-                    generateButton.disabled = false;
-                    // Show chart section
-                    chartSection.style.display = "block";
-
-                    console.log("Product ID in URL:", selectedProductId);
-                }, 5000); // Simulated 1s load time
-            }
-        });
+            // Optional: Update URL
+            window.history.pushState(null, '', `?timeline=${encodeURIComponent(selectedTimeline)}`);
+        }, 1500);
+    });
     </script>
 
 </body>
