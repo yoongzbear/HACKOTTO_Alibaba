@@ -4,46 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Selector</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+    .dashboard {
+      min-height: auto;
+      padding: 2rem;
+      max-width: 90%;
+      margin: 2rem auto;
+      /* ← Added vertical margin */
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    #timelineSelect{
+        width: auto;
+        max-width: 300px;
+        display: inline-block;
+        margin-top: 0.3rem;
+    }
+
+    #generateButton {
+        width: auto;
+        max-width: 200px;
+        display: inline-block;
+        margin-top: 0.3rem;
+    }
+
+    /* Optional: Align dropdown and button on same line */
+    .label-input-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .label-input-group label {
+        flex: 1 1 100%;
+        margin-bottom: 0.3rem;
+    }
+
+    .label-input-group select,
+    .label-input-group button {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .text-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+    }
+
+    .text-button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        transform: translateY(-1px);
+    }
+
+    .text-button:active {
+        transform: translateY(0);
+    }
+
+    .spinner {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border: 4px solid #007bff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 0.8s linear infinite;
+        box-sizing: border-box;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    </style>
+  
 </head>
+
 <body>
-    <label for="productDropdown">Choose a product:</label>
-    <select id="productDropdown">
-        <option value="">--Select a product--</option>
+    <div class="dashboard">
 
-        <?php
-        // Fetch data from database
-        $conn = new mysqli("localhost", "root", "", "caratretail");
+    <!-- Navigation -->
+    <div class="back-bar">
+      <a href="index.html" class="back-button">← Back to Dashboard</a>
+    </div>
+
+    <div class="label-input-group">
+        <!-- Selection Controls -->
+        <label for="timelineSelect">Select Timeline:</label>
+            <div class="input-with-button">
+                <select id="timelineSelect">
+                <option value="">--Select--</option>
+                <option value="7days">Last 7 Days</option>
+                <option value="30days">Last 30 Days</option>
+                <option value="120days">Last 4 Months</option>
+            </select>
+            <button id="generateButton" class="text-button" title="Generate">Generate</button>
+        </div>
         
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+    </div>
 
-        $sql = "SELECT product_id, product_name FROM products";
-        $result = mysqli_query($conn, $sql);
+    <!-- Inline Loading Message -->
+    <div id="loadingMessage" style="display:none; margin-top:1rem; text-align:center;">
+        <div class="spinner"></div>
+        <p style="margin-top: 0.5rem; font-size:1rem;">Generating...</p>
+    </div>
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<option value='" . htmlspecialchars($row['product_id']) . "'>" 
-                    . htmlspecialchars($row['product_name']) . 
-                    "</option>";
-            }
-        } else {
-            echo "<option disabled>No products found</option>";
-        }
-        ?>
-    </select>
-    <button id="searchButton">Search</button>
+        <!-- Chart Section -->
+    <div id="chartSection" style="display: none; margin-top: 2rem;">
+        <div class="chart-grid">
+        <div class="card">
+            <h2>Sales Weekly</h2>
+            <iframe
+            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=aa48429f-e802-438a-8895-cac617b6e888&accessTicket=2c9fa7f6-0fca-405a-a03e-d7b0e8b1cc89&dd_orientation=auto"
+            width="100%" height="800" frameborder="10"></iframe>
+        </div>
+        </div>
+
+            <!-- Chart Section -->
+        <div class="chart-grid">
+        <div class="card">
+            <h2>Sales Weekly</h2>
+            <iframe
+            src="https://bi-ap-southeast-3.data.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=aa48429f-e802-438a-8895-cac617b6e888&accessTicket=2c9fa7f6-0fca-405a-a03e-d7b0e8b1cc89&dd_orientation=auto"
+            width="100%" height="800" frameborder="10"></iframe>
+        </div>
+        </div>
+    </div>
+
+    </div>
 
     <script>
-        const dropdown = document.getElementById("productDropdown");
-        const searchButton = document.getElementById("searchButton");
+        const dropdown = document.getElementById("timelineSelect");
+        const generateButton = document.getElementById("generateButton");
+        const loadingMessage = document.getElementById("loadingMessage");
+        const chartSection = document.getElementById("chartSection");
 
-        searchButton.addEventListener("click", function () {
+        generateButton.addEventListener("click", function () {
             const selectedProductId = dropdown.value;
             if (selectedProductId) {
-                // Redirect to forecast.php with product_id
-                window.location.href = `forecast.php?product_id=${encodeURIComponent(selectedProductId)}`;
+                // Disable button during processing
+                generateButton.disabled = true;
+
+                // Show inline loading message
+                loadingMessage.style.display = "block";
+
+                // Reset UI
+                generateButton.disabled = true;
+                loadingMessage.style.display = "block";
+                chartSection.style.display = "none";
+
+                // Simulate generation delay (replace with real logic)
+                setTimeout(() => {
+                    // Update URL
+                    const newUrl = `?product_id=${encodeURIComponent(selectedProductId)}`;
+                    window.history.pushState(null, '', newUrl);
+
+                    // Hide loading message
+                    loadingMessage.style.display = "none";
+                    generateButton.disabled = false;
+                    // Show chart section
+                    chartSection.style.display = "block";
+
+                    console.log("Product ID in URL:", selectedProductId);
+                }, 5000); // Simulated 1s load time
             }
         });
     </script>
