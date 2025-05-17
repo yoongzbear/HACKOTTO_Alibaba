@@ -1,21 +1,31 @@
-import os
+import sys
+import json
 from openai import OpenAI
 
-try:
+def main():
+    # Read input from PHP
+    input_data = json.loads(sys.stdin.read())
+    history_sales = input_data.get("history_sales", [])
+    forecast_horizon = input_data.get("forecast_horizon", 3)
+
     client = OpenAI(
-        # If the environment variable is not configured, replace the following line with your API key: api_key="sk-xxx",
         api_key="sk-aca8221d88c241d98cd4ad53cda178bf",
         base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
     )
 
-    completion = client.chat.completions.create(
-        model="qwen-plus",  # Model list: https://www.alibabacloud.com/help/en/model-studio/getting-started/models
-        messages=[
-            {'role': 'system', 'content': 'You are a helpful assistant.'},
-            {'role': 'user', 'content': 'Who are you?'}
+    prompt = f"Given the following historical monthly sales data: {history_sales}, predict the next {forecast_horizon} months of sales."
+
+    try:
+        completion = client.chat.completions.create(
+            model="qwen-plus",
+            messages=[
+                {'role': 'system', 'content': 'You are an expert in sales forecasting.'},
+                {'role': 'user', 'content': prompt}
             ]
-    )
-    print(completion.choices[0].message.content)
-except Exception as e:
-    print(f"Error message: {e}")
-    print("For more information, see: https://www.alibabacloud.com/help/en/model-studio/developer-reference/error-code")
+        )
+        print(json.dumps({"forecast": completion.choices[0].message.content}))
+    except Exception as e:
+        print(json.dumps({"error": str(e)}))
+
+if __name__ == "__main__":
+    main()

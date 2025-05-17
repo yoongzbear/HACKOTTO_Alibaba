@@ -25,41 +25,70 @@ while ($row = $result->fetch_assoc()) {
 
 $conn->close();
 
-// 4. Call Model Studio Forecasting API
-$modelId = 'YOUR_MODEL_ID'; // Replace with your actual model ID
-$apiKey = 'YOUR_API_KEY';   // Replace with your actual DASHSCOPE API key
-
-$url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/finetuned-models/{$modelId}/invoke";
-
-$data = [
-    "inputs" => [
-        "history_sales" => $salesData,
-        "forecast_horizon" => 3 // forecast next 3 months
-    ]
-];
-
-$headers = [
-    "Authorization: Bearer {$apiKey}",
-    "Content-Type: application/json"
-];
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-$response = curl_exec($ch);
-
-if (curl_errno($ch)) {
-    echo json_encode(['error' => 'API request failed: ' . curl_error($ch)]);
-    curl_close($ch);
-    exit;
+// 4. Call Python script for forecasting
+try {
+    // Create input data
+    $inputData = json_encode([
+        'history_sales' => $salesData,
+        'forecast_horizon' => 3
+    ]);
+    
+    // Write input data to temporary file
+    $tempFile = tempnam(sys_get_temp_dir(), 'qwen_input_');
+    file_put_contents($tempFile, $inputData);
+    
+    // Execute Python script
+    $command = "python C:\\wamp64\\www\\HACKOTTO_Alibaba\\testQwen.py";
+    
+    // Use proc_open for better control
+    $descriptorspec = [
+        ['pipe', 'r'],  // stdin
+        ['pipe', 'w'],  // stdout
+        ['pipe', 'w']   // stderr
+    ];
+    
+    $process = proc_open($command, $descriptorspec, $pipes);
+    
+    if (is_resource($process)) {
+        // Send input data to Python script
+        fwrite($pipes[0], $inputData);
+        fclose($pipes[0]);
+        
+        // Read output
+        $output = stream_get_contents($pipes[1]);
+        fclose($pipes[1]);
+        
+        // Read error output
+        $errorOutput = stream_get_contents($pipes[2]);
+        fclose($pipes[2]);
+        
+        // Close process
+        $returnValue = proc_close($process);
+        
+        // Log error output for debugging
+        error_log("Qwen error output: " . $errorOutput);
+        
+        // Parse and return result
+        if (!empty($output)) {
+            $result = json_decode($output, true);
+            
+            if (isset($result['error'])) {
+                echo json_encode(['error' => $result['error']]);
+            } else {
+                echo json_encode([
+                    'forecast' => $result['forecast'],
+                    'meta' => [
+                        'input_data' => $salesData,
+                        'forecast_horizon' => 3
+                    ]
+                ]);
+            }
+        } else {
+            echo json_encode(['error' => 'Empty response from Python script']);
+        }
+    } else {
+        echo json_encode(['error' => 'Failed to start Python process']);
+    }
+} catch (Exception $e) {
+    echo json_encode(['error' => 'Error executing forecast: ' . $e->getMessage()]);
 }
-
-curl_close($ch);
-
-// 5. Return the response to frontend (JavaScript)
-echo $response;
-?>
