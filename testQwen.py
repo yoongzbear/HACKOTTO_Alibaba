@@ -1,31 +1,28 @@
-import sys
 import json
-from openai import OpenAI
+from prophet import Prophet
+import pandas as pd
 
-def main():
-    # Read input from PHP
-    input_data = json.loads(sys.stdin.read())
-    history_sales = input_data.get("history_sales", [])
-    forecast_horizon = input_data.get("forecast_horizon", 3)
+def handler(event, context):
+    data = json.loads(event.body.read())
+    history_sales = data.get('history_sales')
+    horizon = data.get('forecast_horizon', 3)
 
-    client = OpenAI(
-        api_key="sk-aca8221d88c241d98cd4ad53cda178bf",
-        base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-    )
+    df = pd.DataFrame({
+        'ds': pd.date_range(start='2024-01-01', periods=len(history_sales), freq='M'),
+        'y': history_sales
+    })
 
-    prompt = f"Given the following historical monthly sales data: {history_sales}, predict the next {forecast_horizon} months of sales."
+    model = Prophet()
+    model.add_country_holidays(country_name='US')
+    model.fit(df)
+    future = model.make_future_dataframe(periods=horizon, freq='M')
+    forecast = model.predict(future)
 
-    try:
-        completion = client.chat.completions.create(
-            model="qwen-plus",
-            messages=[
-                {'role': 'system', 'content': 'You are an expert in sales forecasting.'},
-                {'role': 'user', 'content': prompt}
-            ]
-        )
-        print(json.dumps({"forecast": completion.choices[0].message.content}))
-    except Exception as e:
-        print(json.dumps({"error": str(e)}))
+    result = {
+        'forecast': forecast['yhat'].tail(horizon).round(0).astype(int).tolist()
+    }
 
-if __name__ == "__main__":
-    main()
+    return {
+        "statusCode": 200,
+        "body": json.dumps(result)
+    }
