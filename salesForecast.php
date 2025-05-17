@@ -42,8 +42,8 @@
         searchButton.addEventListener("click", function () {
             const selectedProductId = dropdown.value;
             if (selectedProductId) {
-                const newUrl = `${window.location.pathname}?product_id=${encodeURIComponent(selectedProductId)}`;
-                window.history.pushState({ path: newUrl }, '', newUrl);
+                // Redirect to forecast.php with product_id
+                window.location.href = `forecast.php?product_id=${encodeURIComponent(selectedProductId)}`;
             }
         });
     </script>
