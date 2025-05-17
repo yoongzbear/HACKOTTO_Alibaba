@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inventory Optimization Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Inventory Optimization Dashboard</h1>
+
+        <!-- Product Selection -->
+        <label for="productSelect">Select Product:</label>
+        <select id="productSelect"></select>
+
+        <!-- Filter Input -->
+        <label for="filterInput">Filter Products:</label>
+        <input type="text" id="filterInput" placeholder="Search product..." />
+
+        <!-- Product List -->
+        <ul id="productList"></ul>
+
+        <!-- Restock Info -->
+        <div id="restockInfo" class="restock-info"></div>
+
+        <!-- Order Button -->
+        <button id="orderButton">Order Selected for Next Month</button>
+    </div>
+
+    <script src="inventory-script.js"></script>
+</body>
+</html>
