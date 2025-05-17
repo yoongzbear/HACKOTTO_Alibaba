@@ -6,14 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Inventory Optimization Dashboard</title>
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+    .dashboard {
+        min-height: auto;
+        padding: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    </style>
+
 </head>
 <body>
     <div class="dashboard">
         <h1>Inventory Optimization Dashboard</h1>
 
         <!-- Product Selection -->
-        <label for="productSelect">Select Product:</label>
-        <select id="productSelect"></select>
+        <label for="productSelect">Select A Product:</label>
+        <select id="productSelect">
+        </select>
 
         <!-- Filter Input -->
         <label for="filterInput">Filter Products:</label>
