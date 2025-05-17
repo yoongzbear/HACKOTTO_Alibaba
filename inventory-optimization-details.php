@@ -50,7 +50,6 @@
         });
     </script>
     <body>
-
         <div class="dashboard">
             <div class="back-bar">
                 <a href="index.html" class="back-button">← Back to Dashboard</a>
@@ -61,31 +60,10 @@
             <label for="filterInput">Filter Products:</label>
             <input type="text" id="filterInput" placeholder="Search product..." />
             <p id="noResultMessage" style="display: none; color: red;">No product found</p>
-            
-            <!-- Product Selection -->
-            <label for="productSelect">Select A Product:</label>
-            <select id="productSelect">
-                <option value="">--Select a product--</option>
-
-                <?php
-                require_once 'connection.php';
-
-                $sql = "SELECT product_id, product_name FROM products";
-                $result = mysqli_query($conn, $sql);
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . htmlspecialchars($row['product_id']) . "'>" 
-                            . htmlspecialchars($row['product_name']) . 
-                            "</option>";
-                    }
-                } else {
-                    echo "<option disabled>No products found</option>";
-                }
-                ?>
-            </select>
-            <!-- Product List -->
+               
+        <!-- Product List -->
         <?php
+            require_once 'connection.php';
             // Query to fetch all product details
             $sql2 = "SELECT products.product_name, products.price, inventory.quantity_in_stock FROM products JOIN inventory ON products.product_id = inventory.product_id;";
             $result2 = $conn->query($sql2);
@@ -101,14 +79,35 @@
             } else {
                 echo "<p>No products found.</p>";
             }
-
-            $conn->close();
         ?>
-            <!-- Restock Info -->
-            <div id="restockInfo" class="restock-info"></div>
 
-            <!-- Order Button -->
-            <button id="orderButton">Order</button>
+        <!-- Product Selection -->
+        <label for="productSelect">Select a Product:</label>
+        <select id="productSelect">
+            <option value="">--Select a product--</option>
+
+            <?php
+
+            $sql = "SELECT product_id, product_name FROM products";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value='" . htmlspecialchars($row['product_id']) . "'>" 
+                        . htmlspecialchars($row['product_name']) . 
+                        "</option>";
+                }
+            } else {
+                echo "<option disabled>No products found</option>";
+            }
+            ?>
+        </select>
+
+        <!-- Restock Info -->
+        <div id="restockInfo" class="restock-info"></div>
+
+        <!-- Order Button -->
+        <button id="orderButton">Order</button>
     </div>
 </body>
 </html>
