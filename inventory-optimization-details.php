@@ -23,20 +23,29 @@
         document.addEventListener("DOMContentLoaded", function () {
             const filterInput = document.getElementById("filterInput");
             const productList = document.getElementById("productList");
+            const noResultMessage = document.getElementById("noResultMessage");
 
             filterInput.addEventListener("input", function () {
                 const filterValue = filterInput.value.toLowerCase();
 
                 const items = productList.getElementsByTagName("li");
+                let visibleCount = 0;
 
                 Array.from(items).forEach(function (item) {
                     const productName = item.querySelector("strong").textContent.toLowerCase();
                     if (productName.includes(filterValue)) {
                         item.style.display = "";
+                        visibleCount++;
                     } else {
                         item.style.display = "none";
                     }
                 });
+                // Show or hide the "no result" message
+                if (filterValue.length > 0 && visibleCount === 0) {
+                    noResultMessage.style.display = "block";
+                } else {
+                    noResultMessage.style.display = "none";
+                }
             });
         });
     </script>
@@ -48,6 +57,11 @@
             </div>
             <h1>Inventory Optimization Dashboard</h1>
 
+            <!-- Filter Input -->
+            <label for="filterInput">Filter Products:</label>
+            <input type="text" id="filterInput" placeholder="Search product..." />
+            <p id="noResultMessage" style="display: none; color: red;">No product found</p>
+            
             <!-- Product Selection -->
             <label for="productSelect">Select A Product:</label>
             <select id="productSelect">
@@ -70,11 +84,6 @@
                 }
                 ?>
             </select>
-
-            <!-- Filter Input -->
-            <label for="filterInput">Filter Products:</label>
-            <input type="text" id="filterInput" placeholder="Search product..." />
-
             <!-- Product List -->
         <?php
             // Query to fetch all product details
@@ -99,7 +108,7 @@
             <div id="restockInfo" class="restock-info"></div>
 
             <!-- Order Button -->
-            <button id="orderButton">Order Selected for Next Month</button>
+            <button id="orderButton">Order</button>
     </div>
 </body>
 </html>

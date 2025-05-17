@@ -193,6 +193,9 @@ select, input[type="text"] {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  max-width: 300px;
+  width: 100%;
+   margin: 1.5rem auto;
 }
 
 #orderButton:hover {
