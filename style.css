@@ -1,151 +1,194 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
 }
 
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Full screen */
-    padding: 2rem;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+  background: linear-gradient(to right, #f8f9fa, #598ec4);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-family: "Inter", sans-serif;;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 0.3rem;
+  font-family: "Playpen Sans Deva", cursive;
+  font-weight: 400;
 }
 
 h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  flex-grow: 1;
+  width: 100%;
 }
 
 .card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 350px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer; /* Indicates interactivity */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow */
 }
 
 .card h2 {
-    margin-top: 0;
-    font-size: 1.5rem;
-    color: #2c3e50;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+.card:focus-within {
+  outline: 2px dashed #007bff;
+  outline-offset: -2px;
 }
 
 canvas {
-    max-width: 100%;
-    height: 300px !important; /* Make chart canvas larger */
-    margin-top: 1rem;
+  max-width: 100%;
+  height: 300px !important; /* Consistent chart height */
+  margin: auto;
 }
 
 /*Inventory Optimization*/
 .restock-info {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff9c4;
-    border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff9c4;
+  border-radius: 5px;
 }
 
 .product-item {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
 }
 
 .restock-flag {
-    color: red;
-    font-weight: bold;
-    margin-left: 10px;
+  color: red;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 .back-button {
-    display: inline-block;
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #f0f0f0;
-    color: #333;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
 
 .back-button:hover {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: bold;
-    color: #333;
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #333;
 }
 
 select, input[type="text"] {
-    width: 100%;
-    padding: 0.6rem;
-    margin-top: 0.3rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 #productList {
-    list-style: none;
-    padding: 0;
-    margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
 }
 
 #productList li {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fafafa;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
-    transition: background-color 0.2s ease;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fafafa;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s ease;
 }
 
 #productList li:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .restock-info {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #ffeaa7;
-    border-left: 4px solid #fab14b;
-    font-weight: bold;
-    color: #333;
-    border-radius: 4px;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #ffeaa7;
+  border-left: 4px solid #fab14b;
+  font-weight: bold;
+  color: #333;
+  border-radius: 4px;
 }
 
 #orderButton {
-    margin-top: 1.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 #orderButton:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }

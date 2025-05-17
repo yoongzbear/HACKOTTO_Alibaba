@@ -52,11 +52,38 @@ new Chart(trendCtx, {
   data: {
     labels: ['Electronics', 'Clothing', 'Home Goods'],
     datasets: [{
+      label: 'Sales Distribution',
       data: [300, 50, 100],
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderColor: '#fff',
+      borderWidth: 2
     }]
   },
-  options: { responsive: true }
+  options: {
+    responsive: true,
+    maintainAspectRatio: false, // Allows full resizing
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          padding: 20,
+          boxWidth: 12,
+          font: {
+            size: 12
+          }
+        }
+      },
+      tooltip: {
+        enabled: true
+      },
+      title: {
+        display: false
+      },
+      datalabels: {
+        display: false // Hide value labels inside slices if cluttered
+      }
+    }
+  }
 });
 
 // sales forecast
