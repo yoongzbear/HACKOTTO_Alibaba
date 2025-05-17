@@ -85,7 +85,7 @@
                 echo "<ul id=\"productList\">";
                 while ($row = $result2->fetch_assoc()) {
                     echo "<li>";
-                    echo "<strong>" . htmlspecialchars($row['product_name']) . " - " . htmlspecialchars($row['quantity_in_stock']) . "</strong>";
+                        echo "<strong>" . htmlspecialchars($row['product_name']) . " (Stock: " . htmlspecialchars($row['quantity_in_stock']) . ")</strong>";
                     echo "</li><br>";
                 }
                 echo "</ul>";
