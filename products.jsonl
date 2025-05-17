@@ -1,44 +1,6 @@
-[
-  {
-    "product_id": 1,
-    "product_name": "Winter Dream Album",
-    "description": "Official album by popular K-pop group",
-    "price": 29.99,
-    "category_id": 1
-  },
-  {
-    "product_id": 2,
-    "product_name": "Summer Vibes Album",
-    "description": "Limited edition summer album",
-    "price": 34.99,
-    "category_id": 1
-  },
-  {
-    "product_id": 3,
-    "product_name": "Artist T-shirt",
-    "description": "Cotton T-shirt with artist logo",
-    "price": 19.99,
-    "category_id": 2
-  },
-  {
-    "product_id": 4,
-    "product_name": "Keychain Set",
-    "description": "Set of 5 official merchandise keychains",
-    "price": 14.99,
-    "category_id": 2
-  },
-  {
-    "product_id": 5,
-    "product_name": "Group Photo Card",
-    "description": "Random photo card from album purchase",
-    "price": 0.00,
-    "category_id": 3
-  },
-  {
-    "product_id": 6,
-    "product_name": "Solo Photo Card",
-    "description": "Exclusive solo photo card",
-    "price": 0.00,
-    "category_id": 3
-  }
-]
+{"product_id":1,"product_name":"Winter Dream Album","description":"Official album by popular K-pop group","price":29.99,"category_id":1}
+{"product_id":2,"product_name":"Summer Vibes Album","description":"Limited edition summer album","price":34.99,"category_id":1}
+{"product_id":3,"product_name":"Artist T-shirt","description":"Cotton T-shirt with artist logo","price":19.99,"category_id":2}
+{"product_id":4,"product_name":"Keychain Set","description":"Set of 5 official merchandise keychains","price":14.99,"category_id":2}
+{"product_id":5,"product_name":"Group Photo Card","description":"Random photo card from album purchase","price":0.0,"category_id":3}
+{"product_id":6,"product_name":"Solo Photo Card","description":"Exclusive solo photo card","price":0.0,"category_id":3}
