@@ -6,27 +6,46 @@
     <title>Product Selector</title>
 </head>
 <body>
-
     <label for="productDropdown">Choose a product:</label>
     <select id="productDropdown">
         <option value="">--Select a product--</option>
-        <option value="ProductA">Product A</option>
-        <option value="ProductB">Product B</option>
-        <option value="ProductC">Product C</option>
+
+        <?php
+        // Fetch data from database
+        $conn = new mysqli("localhost", "root", "", "caratretail");
+        
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT product_id, product_name FROM products";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<option value='" . htmlspecialchars($row['product_id']) . "'>" 
+                    . htmlspecialchars($row['product_name']) . 
+                    "</option>";
+            }
+        } else {
+            echo "<option disabled>No products found</option>";
+        }
+        ?>
     </select>
+    <button id="searchButton">Search</button>
 
     <script>
         const dropdown = document.getElementById("productDropdown");
+        const searchButton = document.getElementById("searchButton");
 
-        dropdown.addEventListener("change", function () {
-            const selectedProduct = this.value;
-            if (selectedProduct) {
-                // Change the URL without reloading the page
-                const newUrl = `${window.location.pathname}?product=${encodeURIComponent(selectedProduct)}`;
+        searchButton.addEventListener("click", function () {
+            const selectedProductId = dropdown.value;
+            if (selectedProductId) {
+                const newUrl = `${window.location.pathname}?product_id=${encodeURIComponent(selectedProductId)}`;
                 window.history.pushState({ path: newUrl }, '', newUrl);
             }
         });
-
     </script>
 
 </body>
