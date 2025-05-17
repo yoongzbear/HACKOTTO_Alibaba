@@ -7,47 +7,6 @@
   <link rel="stylesheet" href="style.css" />
   
   <style>
-    .controls {
-        max-width: 900px;
-        margin-bottom: 2rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .controls label {
-        font-weight: bold;
-        min-width: 120px;
-    }
-
-    .controls select {
-        flex: 1;
-        min-width: 200px;
-    }
-
-    .chart-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 2rem;
-        width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    .recommendation-section {
-        max-width: 80%;
-        margin: 0 auto 2rem auto;
-        width: 100%;
-    }
-
-    .recommendation-section textarea {
-        width: 100%;
-        padding: 1rem;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        resize: vertical;
-    }
-
     .dashboard {
             min-height: auto;
             padding: 2rem;
@@ -56,7 +15,18 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
+    }
+
+    .card {
+        transition: none !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        cursor: default;
+    }   
+
+    .card:hover {
+        transform: none !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    }
     </style>
 </head>
 
