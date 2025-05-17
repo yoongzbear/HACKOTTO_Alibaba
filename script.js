@@ -92,3 +92,6 @@ function updateForecastChart(forecastData) {
 }
 
 // call the forecast like loadSalesForecast(1); // forecast for product ID 1
+//testing
+
+
