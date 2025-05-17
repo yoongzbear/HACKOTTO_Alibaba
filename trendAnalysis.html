@@ -1,34 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Revenue and Sales Forecasting Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trend Analysis</title>
+  <link rel="stylesheet" href="style.css" />
+  
+  <style>
+    .controls {
+        max-width: 900px;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .controls label {
+        font-weight: bold;
+        min-width: 120px;
+    }
+
+    .controls select {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .recommendation-section {
+        max-width: 80%;
+        margin: 0 auto 2rem auto;
+        width: 100%;
+    }
+
+    .recommendation-section textarea {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        resize: vertical;
+    }
+
+    .dashboard {
+            min-height: auto;
+            padding: 2rem;
+            max-width: 90%;
+            margin: 2rem auto; /* ← Added vertical margin */
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+    </style>
 </head>
+
 <body>
-    <div class="dashboard">
-        <div class="card">
-            <canvas id="revenueForecast"></canvas>
-        </div>
-        <div class="card">
-            <canvas id="unitsSoldForecast"></canvas>
-        </div>
-        <div class="card">
-            <canvas id="forecastingAccuracy"></canvas>
-        </div>
-        <div class="card">
-            <canvas id="salesByType"></canvas>
-        </div>
-        <div class="card">
-            <canvas id="averageSalesPriceTrend"></canvas>
-        </div>
-        <div class="card">
-            <canvas id="revenueTrend"></canvas>
-        </div>
+  <div class="dashboard">
+    
+    <!-- Navigation -->
+    <div class="back-bar">
+      <a href="index.html" class="back-button">← Back to Dashboard</a>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="trendAnalysis.js"></script>
+    <h1>Product Trend Analysis</h1>
+
+    <!-- Selection Controls -->
+    <div class="controls">
+      <label for="productSelect">Select Product:</label>
+      <select id="productSelect">
+        <option value="">Select A Product...</option>
+        <option value="productA">Product A</option>
+        <option value="productB">Product B</option>
+        <option value="productC">Product C</option>
+      </select>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-grid">
+      <div class="card">
+        <h2>Sales Over Time</h2>
+        <canvas id="salesOverTimeChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Recommendation Area -->
+    <div class="recommendation-section">
+      <label for="recommendation"><strong>AI Recommendation:</strong></label>
+      <textarea id="recommendation" rows="5" placeholder="AI-generated recommendation will appear here..."></textarea>
+    </div>
+
+    <!-- Selection Controls -->
+    <div class="controls">
+      <label for="timelineSelect">Select Timeline:</label>
+      <select id="timelineSelect">
+        <option value="7days">Last 7 Days</option>
+        <option value="30days">Last 30 Days</option>
+        <option value="90days">Last 90 Days</option>
+      </select>
+    </div>
+
+     <!-- Chart Section -->
+    <div class="chart-grid">
+      <div class="card">
+        <h2>Revenue Trend</h2>
+        <canvas id="revenueTrendChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Recommendation Area -->
+    <div class="recommendation-section">
+      <label for="recommendation"><strong>AI Recommendation:</strong></label>
+      <textarea id="recommendation" rows="5" placeholder="AI-generated recommendation will appear here..."></textarea>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="trendAnalysis.js"></script>
 </body>
 </html>
