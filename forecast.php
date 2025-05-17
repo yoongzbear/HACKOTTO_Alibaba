@@ -1,9 +1,17 @@
 <?php
 // 1. Connect to MySQL
-$conn = new mysqli("localhost", "root", "", "caratretail");
+$conn = new mysqli(
+    "rm-3nsixe3586321q3dsuo.mysql.rds.aliyuncs.com", // ← RDS Public Endpoint rm-3nsixe3586321q3dsuo.mysql.rds.aliyuncs.com
+    "woozi",                 // ← DB user
+    "w@ozi123",                 // ← DB password
+    "caratretail",                      // ← Database name
+    3306                            // ← Port
+);
 
 if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+    echo "Connection failed: " . $conn->connect_error;
+} else {
+    echo "Connected to RDS successfully!";
 }
 
 // 2. Get product_id from request
